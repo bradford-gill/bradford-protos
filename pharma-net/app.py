@@ -98,8 +98,8 @@ def main():
     **Use Directions:**
     
     Pretend you are having a conversation with the model. For example; 
-    if you are asking about the specific drug, ask clarifying questions
-    about the drug such as 'can you please expand on the side effects'.
+    if you are asking about a specific drug, ask clarifying questions 
+    such as 'can you please expand on the side effects'.
     
     **Contact**: (413)-575-3769
     """)

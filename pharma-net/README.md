@@ -5,8 +5,8 @@ Prototype to provide insights into high end pharmaceutical
 ### Docker 
 ~~~bash
 docker build -t proto .
-# if .env file !exist -> nano .env
-docker run -d --env-file .env -p 8080:8080 proto
+# if .env file does not exist -> nano .env
+docker run -d --env-file .env -p 80:80 proto
 
 ~~~
 ### Conda on local 
