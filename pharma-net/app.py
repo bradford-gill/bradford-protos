@@ -45,10 +45,10 @@ class Session:
                 
                 You must include the disclaimer: 
                 
-                "**This information is for general knowledge purposes only and is 
+                "**`This information is for general knowledge purposes only and is 
                 not a substitute for professional medical advice, diagnosis, or 
                 treatment. Always consult a licensed healthcare provider for any
-                medical concerns**'''
+                medical concerns`**'''
             },
         ]
     
@@ -81,7 +81,7 @@ if 'session' not in st.session_state:
 # Streamlit app
 def main():
     st.title("Pharma-net Prototype")
-    st.warning("FOR PROTOTYPE USE ONLY - RESULT ACCURACY NOT GUARANTEED")
+    st.markdown("`FOR PROTOTYPE USE ONLY - RESULT ACCURACY NOT GUARANTEED`")
     
     if not check_password():  
         st.stop()

@@ -27,3 +27,6 @@ streamlit run app.py
 
 
 
+sudo certbot --nginx -d prototype.bradfordgill.com
+
+
