@@ -18,4 +18,4 @@ COPY . /app/
 EXPOSE 80
 
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=80"]
+CMD ["streamlit", "run", "main.py", "--server.port=80"]
