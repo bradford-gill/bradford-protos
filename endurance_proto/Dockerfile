@@ -15,7 +15,7 @@ RUN uv pip install --no-cache-dir -r requirements.txt --system
 COPY . /app/
 
 # Expose the port Streamlit runs on
-EXPOSE 80
+EXPOSE 8501
 
 # Command to run the Streamlit app
 CMD ["streamlit", "run", "main.py"]
