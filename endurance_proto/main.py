@@ -74,7 +74,7 @@ if prompt := st.chat_input("Talk with the training plan agent"):
         message_placeholder = st.empty()
         try:
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages] + [system_prompt]
             )
 
