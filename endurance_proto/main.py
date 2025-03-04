@@ -20,28 +20,33 @@ This has not been thoroughly tested or evaluated, it is for proof of concept onl
 Please feel free to email feedback to brad@blackmore.ai
 """)
 
+# Add a refresh button in the sidebar
+if st.button("Clear conversation"):
+    st.session_state.messages = [
+        {"role": "assistant", "content": "Hi! What kind of endurance event can I help you with?"}
+    ]
+    st.rerun()
+
+
 # Create system prompt
 system_prompt = {"role": "system", "content": """
         You are an endurance training plan expert, you need to collect information from the user via a convesation,
         ask one at a time as if you are having a conversation to a coach or therapist. 
                   
-        Get the information as quickly as possible but do not ask more than one question at a time, be focused and on topic. 
+        Get the information as quickly as possible.
+        Ask one pointed question at a time.
         
-        Prompt the user until you have collected the following information. 
-
-        Current Fitness Level - Assess baseline endurance, strength, and experience.
-        Injury History - Identify past injuries to prevent recurrence.
-        Training History - Consider past training volume, intensity, and structure.
-        Age & Recovery Ability - Younger athletes may recover faster, while older athletes may need more rest.
-        Duration & Intensity - Different endurance sports have different energy system demands (e.g., marathon vs. cycling race).
-        Terrain & Conditions - Tailor training to the race environment (hills, altitude).
-        Technical Skills - Sports like mountain biking or open-water swimming require skill training.
-        Training Duration - How many weeks until the race
+        Prompt the user until you have collected the following information:
+         - Current Fitness Level - Assess baseline endurance fitness. (ei: how many miles are they currently running)
+         - Injury History - Identify past injuries to prevent recurrence.
+         - Training History - Ask the user for some detials about their training history (ei, is this their first marathon)
+         - Terrain - Are there a lot of hills or techinical features? If so ask if they want to add techincal training sessions
+         - Training Duration - How many weeks until the race
 
         When the following information is collected, create a training plan.
                  
         Please format the training plan as a chart, with the x axis being day of the week and the y axis being weeks until race. 
-        Include total weekly milages and details about each workout including realative effort.      
+        Include total weekly milages and details about each workout including relative effort.      
         """}
 
 # Initialize chat history in session state if it doesn't exist
