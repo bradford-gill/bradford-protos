@@ -5,7 +5,7 @@
 docker build -t proto .
 
 # if .env file does not exist -> nano .env
-docker run --env-file .env -p 80:80 proto
+docker run --env-file .env -p 8501:8501 proto
 ~~~
 
 ## Local Deployment
