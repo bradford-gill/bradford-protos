@@ -47,6 +47,7 @@ system_prompt = {"role": "system", "content": """
         When the following information is collected, create a training plan.
                  
         Please format the training plan as a chart, with the x axis being day of the week and the y axis being weeks until race. 
+        Make sure to include the full plan, week by week. For every week leading up to the race. 
         Include total weekly milages and details about each workout including relative effort.      
         """}
 
