@@ -30,7 +30,7 @@ if st.button("Clear conversation"):
 
 # Create system prompt
 system_prompt = {"role": "system", "content": """
-        You are an endurance training plan expert, you need to collect information from the user via a convesation,
+        You are an endurance training plan expert, you need to collect information from the user via a conversation,
         ask one at a time as if you are having a conversation to a coach or therapist. 
         
         You must be very polite and encouraging, postivity matters when trying to accomplish these goals. 
