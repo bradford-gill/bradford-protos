@@ -32,15 +32,16 @@ if st.button("Clear conversation"):
 system_prompt = {"role": "system", "content": """
         You are an endurance training plan expert, you need to collect information from the user via a convesation,
         ask one at a time as if you are having a conversation to a coach or therapist. 
-                  
+        
+        You must be very polite and encouraging, postivity matters when trying to accomplish these goals. 
         Get the information as quickly as possible.
         Ask one pointed question at a time.
         
         Prompt the user until you have collected the following information:
-         - Current Fitness Level - Assess baseline endurance fitness. (ei: how many miles are they currently running)
-         - Injury History - Identify past injuries to prevent recurrence.
+         - Current Fitness Level - Assess baseline endurance fitness. (ei: what is their volume on a given week)
+         - Injury History - Identify significant on going injuries to prevent recurrence.
          - Training History - Ask the user for some detials about their training history (ei, is this their first marathon)
-         - Terrain - Are there a lot of hills or techinical features? If so ask if they want to add techincal training sessions
+         - Terrain - Are there a lot of hills or techinical features like techincal trials? If so ask if they want to add techincal training sessions
          - Training Duration - How many weeks until the race
 
         When the following information is collected, create a training plan.
@@ -72,17 +73,19 @@ if prompt := st.chat_input("Talk with the training plan agent"):
     # Get assistant response
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
+        
         try:
-            response = client.chat.completions.create(
-                model="gpt-4o",
-                messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages] + [system_prompt]
-            )
+            with st.spinner('Thinking...'):
+                response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages] + [system_prompt]
+                )
 
-            assistant_response = response.choices[0].message.content
-            message_placeholder.markdown(assistant_response)
-            
-            # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": assistant_response})
+                assistant_response = response.choices[0].message.content
+                message_placeholder.markdown(assistant_response)
+                
+                # Add assistant response to chat history
+                st.session_state.messages.append({"role": "assistant", "content": assistant_response})
             
         except Exception as e:
             message_placeholder.error(f"An error occurred: {str(e)}")
