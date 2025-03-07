@@ -1,68 +1,76 @@
-import json
-import requests
-from dotenv import load_dotenv
-import os
 from openai import OpenAI
+import json
+import os
+from dotenv import load_dotenv
+from pydantic import BaseModel, Field
 
-# Load environment variables from .env
 load_dotenv()
 
-# Initialize the OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Example function to fetch weather data
-def get_weather(city):
-    """Fetches weather data for a given city."""
-    api_url = f"https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true"
-    response = requests.get(api_url)
-
-    response = client.chat.completions.create(
-        model="gpt-4-turbo",
-        messages=[{"role": "user", "content": f"Discripe the weather: {response.json()}"}],
-    )
-
-
-    return response.choices[0].message
-
-# Define the function schema for OpenAI function calling
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "get_weather",
-            "description": "Get the current weather for a specific city",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "city": {
-                        "type": "string",
-                        "description": "The name of the city to get the weather for",
-                    }
-                },
-                "required": ["city"],
-            },
+def parse_string_to_dict(input_string, desired_keys):
+    """
+    Parse a string into a dictionary with specified keys using OpenAI.
+    
+    Args:
+        input_string: The string to parse
+        desired_keys: Dictionary of {key_name: description} pairs
+    
+    Returns:
+        Dictionary with the specified keys
+    """
+    # Create schema for the function
+    properties = {}
+    for key, description in desired_keys.items():
+        properties[str(key)] = {
+            "type": "string", 
+            "description": str(description)
         }
-    }
-]
-
-def main():
-    # Call the OpenAI API
+    
+    # Define the function/tool schema
+    tools = [
+        {
+            "type": "function",
+            "function": {
+                "name": "extract_information",
+                "description": f"Extract structured information from the text",
+                "parameters": {
+                    "type": "object",
+                    "properties": properties,
+                    "required": list(desired_keys.keys())
+                }
+            }
+        }
+    ]
+    
+    # Make the API call
     response = client.chat.completions.create(
         model="gpt-4-turbo",
-        messages=[{"role": "user", "content": "What's the weather like in Tokyo?"}],
+        messages=[
+            {"role": "system", "content": "You extract information accurately from text."},
+            {"role": "user", "content": f"Extract the following information from this text: {input_string}"}
+        ],
         tools=tools,
-        tool_choice="auto",  # OpenAI will decide when to call the function
+        tool_choice={"type": "function", "function": {"name": "extract_information"}}
     )
+    
+    # Extract the structured data
+    tool_call = response.choices[0].message.tool_calls[0]
+    extracted_data = json.loads(tool_call.function.arguments)
+    
+    return extracted_data
 
-    # Check if OpenAI wants to call a tool/function
-    tool_calls = response.choices[0].message.tool_calls
-    for tool_call in tool_calls:
-        if tool_call.function.name == "get_weather":
-            # Parse the arguments
-            arguments = json.loads(tool_call.function.arguments)
-            # Call the function
-            weather_info = get_weather(arguments["city"])
-            print(weather_info)
+# Example usage
+input_text = "Brad is a super rad skier, who typically skis in the bridger mountians of montana. He has scarpa boots and blackcrow skis."
 
-if __name__ == "__main__":
-    main()
+class SkierInfo(BaseModel):
+    name: str = Field(description="The person's full name")
+    skis: str = Field(description="what type of skis does the person have")
+    boots: str = Field(description="what type of ski boots does the person have")
+    mountain_range: str = Field(description="What mountian range does the person ski in normally")
+
+
+result = parse_string_to_dict(input_text, dict(SkierInfo.model_fields))
+print(json.dumps(result, indent=2))
+print("\n\nSkier info:")
+print(SkierInfo(**result))
