@@ -48,7 +48,7 @@ def parse_string_to_dict(input_string, desired_keys):
         model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": "You extract information accurately from text."},
-            {"role": "user", "content": f"Extract the following information from this text: {input_string}"}
+            {"role": "user", "content": f"{input_string}"}
         ],
         tools=tools,
         tool_choice={"type": "function", "function": {"name": "extract_information"}}
@@ -61,7 +61,7 @@ def parse_string_to_dict(input_string, desired_keys):
     return extracted_data
 
 # Example usage
-input_text = "Brad is a super rad skier, who typically skis in the bridger mountians of montana. He has scarpa boots and blackcrow skis."
+input_text = "Brad is a super rad skier, who typically skis in the bridger mountians of montana. He has scarpa boots and blackcrow navis freebird skis."
 
 class SkierInfo(BaseModel):
     name: str = Field(description="The person's full name")
@@ -71,6 +71,5 @@ class SkierInfo(BaseModel):
 
 
 result = parse_string_to_dict(input_text, dict(SkierInfo.model_fields))
-print(json.dumps(result, indent=2))
-print("\n\nSkier info:")
-print(SkierInfo(**result))
+print(f"Input: {input_text}")
+print(f"Output: {SkierInfo(**result)}")
