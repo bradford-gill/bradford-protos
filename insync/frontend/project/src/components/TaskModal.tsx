@@ -21,9 +21,9 @@ export function TaskModal({ open, onClose, taskType }: TaskModalProps) {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'High': return 'bg-red-100 text-red-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Low': return 'bg-green-100 text-green-800';
+      case 'High': return 'bg-gray-900 text-white';
+      case 'Medium': return 'bg-gray-600 text-white';
+      case 'Low': return 'bg-gray-300 text-gray-900';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -88,7 +88,7 @@ export function TaskModal({ open, onClose, taskType }: TaskModalProps) {
                 </div>
 
                 <div className="flex gap-2 pt-2">
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                  <Button size="sm" className="bg-gray-900 hover:bg-gray-800">
                     Complete Task
                   </Button>
                   <Button size="sm" variant="outline">

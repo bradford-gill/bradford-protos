@@ -11,10 +11,10 @@ export function ACODashboard() {
   const navigate = useNavigate();
 
   const admissionsData = [
-    { name: 'COPD', value: 45, color: '#3b82f6' },
-    { name: 'CHF', value: 38, color: '#10b981' },
-    { name: 'Trach/Vent', value: 22, color: '#f59e0b' },
-    { name: 'Other', value: 15, color: '#6b7280' },
+    { name: 'COPD', value: 45, color: '#111827' },
+    { name: 'CHF', value: 38, color: '#4b5563' },
+    { name: 'Trach/Vent', value: 22, color: '#9ca3af' },
+    { name: 'Other', value: 15, color: '#d1d5db' },
   ];
 
   const readmissionTrend = [
@@ -34,17 +34,17 @@ export function ACODashboard() {
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'High': return 'bg-red-100 text-red-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Low': return 'bg-green-100 text-green-800';
+      case 'High': return 'bg-gray-900 text-white';
+      case 'Medium': return 'bg-gray-600 text-white';
+      case 'Low': return 'bg-gray-300 text-gray-900';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-50 border-red-200';
-      case 'medium': return 'bg-yellow-50 border-yellow-200';
+      case 'high': return 'bg-gray-900 border-gray-900 text-white';
+      case 'medium': return 'bg-gray-600 border-gray-600 text-white';
       case 'low': return 'bg-gray-50 border-gray-200';
       default: return 'bg-gray-50 border-gray-200';
     }
@@ -80,7 +80,7 @@ export function ACODashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">4.3 days</div>
-              <p className="text-xs text-green-600 mt-1">↓ 0.5 from last month</p>
+              <p className="text-xs text-gray-600 mt-1">↓ 0.5 from last month</p>
             </CardContent>
           </Card>
 
@@ -93,7 +93,7 @@ export function ACODashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">15.2%</div>
-              <p className="text-xs text-green-600 mt-1">↓ 2.1% from target</p>
+              <p className="text-xs text-gray-600 mt-1">↓ 2.1% from target</p>
             </CardContent>
           </Card>
 
@@ -151,8 +151,8 @@ export function ACODashboard() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="copd" stroke="#3b82f6" name="COPD" strokeWidth={2} />
-                  <Line type="monotone" dataKey="chf" stroke="#10b981" name="CHF" strokeWidth={2} />
+                  <Line type="monotone" dataKey="copd" stroke="#4b5563" name="COPD" strokeWidth={2} />
+                  <Line type="monotone" dataKey="chf" stroke="#9ca3af" name="CHF" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -193,7 +193,7 @@ export function ACODashboard() {
                     onClick={() => navigate(`/patient/${patient.id}`)}
                   >
                     <div className="flex items-center gap-4 flex-1">
-                      <Button variant="link" className="p-0 h-auto text-blue-600 font-semibold">
+                      <Button variant="link" className="p-0 h-auto text-gray-900 font-semibold">
                         {patient.name}
                       </Button>
                       <Badge variant="outline">{patient.diagnosis[0]}</Badge>

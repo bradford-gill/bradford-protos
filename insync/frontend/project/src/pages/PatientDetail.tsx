@@ -18,9 +18,9 @@ export function PatientDetail() {
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'High': return 'bg-red-100 text-red-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Low': return 'bg-green-100 text-green-800';
+      case 'High': return 'bg-gray-900 text-white';
+      case 'Medium': return 'bg-gray-600 text-white';
+      case 'Low': return 'bg-gray-300 text-gray-900';
       default: return 'bg-gray-100 text-gray-800';
     }
   };

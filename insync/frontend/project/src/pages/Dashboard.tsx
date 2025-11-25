@@ -27,7 +27,7 @@ export function Dashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Complete': return 'bg-green-50 text-green-700 border-green-200';
+      case 'Complete': return 'bg-gray-200 text-gray-900 border-gray-300';
       case 'In Progress': return 'bg-gray-900 text-white border-gray-900';
       case 'Open': return 'bg-gray-100 text-gray-700 border-gray-200';
       default: return 'bg-gray-100 text-gray-700 border-gray-200';
@@ -211,7 +211,7 @@ export function Dashboard() {
           <span className="font-medium">v2.1.0</span>
           <span className="text-gray-300">•</span>
           <span className="flex items-center gap-2">
-            <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span className="h-2 w-2 bg-gray-500 rounded-full animate-pulse"></span>
             <span className="font-medium">HIPAA Compliant</span>
           </span>
         </div>

@@ -68,7 +68,7 @@ export function ContractPerformance() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">{contractData.expendituresPMPM}</div>
-              <p className="text-xs text-green-600 mt-1">Below benchmark</p>
+              <p className="text-xs text-gray-600 mt-1">Below benchmark</p>
             </CardContent>
           </Card>
 
@@ -93,7 +93,7 @@ export function ContractPerformance() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-600">{contractData.sharedSavings}</div>
+              <div className="text-3xl font-bold text-gray-900">{contractData.sharedSavings}</div>
               <p className="text-xs text-gray-500 mt-1">Current contract period</p>
             </CardContent>
           </Card>
@@ -111,7 +111,7 @@ export function ContractPerformance() {
                 <YAxis />
                 <Tooltip formatter={(value) => `$${Number(value).toLocaleString()}`} />
                 <Legend />
-                <Line type="monotone" dataKey="amount" stroke="#10b981" name="Shared Savings" strokeWidth={2} />
+                <Line type="monotone" dataKey="amount" stroke="#4b5563" name="Shared Savings" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -135,7 +135,7 @@ export function ContractPerformance() {
                   {contractData.metrics.map((metric, i) => (
                     <TableRow key={i}>
                       <TableCell className="font-medium">{metric.name}</TableCell>
-                      <TableCell className="text-green-600 font-semibold">{metric.actual}</TableCell>
+                      <TableCell className="text-gray-900 font-semibold">{metric.actual}</TableCell>
                       <TableCell>{metric.benchmark}</TableCell>
                     </TableRow>
                   ))}
@@ -155,7 +155,7 @@ export function ContractPerformance() {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value" fill="#3b82f6" />
+                  <Bar dataKey="value" fill="#4b5563" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>

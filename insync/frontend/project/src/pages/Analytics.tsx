@@ -73,9 +73,9 @@ export function Analytics() {
                   </div>
 
                   <div className="text-right space-y-3">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full border border-green-500/30">
-                      <TrendingDown className="h-4 w-4 text-green-400" />
-                      <span className="text-green-400 font-semibold text-sm">↑ 23% vs last quarter</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-500/20 rounded-full border border-gray-500/30">
+                      <TrendingDown className="h-4 w-4 text-gray-400" />
+                      <span className="text-gray-400 font-semibold text-sm">↑ 23% vs last quarter</span>
                     </div>
                     <div className="text-white/60 text-sm">Performance trending upward</div>
                   </div>
@@ -93,7 +93,7 @@ export function Analytics() {
                     <div className="text-white/80 text-sm font-medium">30-Day Readmission Rate</div>
                   </div>
                   <div className="text-5xl font-bold text-white mb-2">{executiveSummary.readmissionRate}%</div>
-                  <p className="text-green-400 text-sm font-medium">↓ 1.3% from last month</p>
+                  <p className="text-gray-400 text-sm font-medium">↓ 1.3% from last month</p>
                 </CardContent>
               </Card>
 
@@ -209,7 +209,7 @@ export function Analytics() {
                       <XAxis dataKey="month" />
                       <YAxis domain={[0, 100]} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="rate" stroke="#3b82f6" strokeWidth={2} name="Compliance %" />
+                      <Line type="monotone" dataKey="rate" stroke="#4b5563" strokeWidth={2} name="Compliance %" />
                     </LineChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -226,7 +226,7 @@ export function Analytics() {
                       <XAxis dataKey="month" />
                       <YAxis domain={[0, 100]} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="rate" stroke="#10b981" strokeWidth={2} name="Compliance %" />
+                      <Line type="monotone" dataKey="rate" stroke="#6b7280" strokeWidth={2} name="Compliance %" />
                     </LineChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -282,7 +282,7 @@ export function Analytics() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-3xl font-bold">{workforceData.avgDailyVisits}</div>
-                  <p className="text-xs text-green-600 mt-1">↑ 2 from last week</p>
+                  <p className="text-xs text-gray-600 mt-1">↑ 2 from last week</p>
                 </CardContent>
               </Card>
 
@@ -295,7 +295,7 @@ export function Analytics() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-3xl font-bold">{workforceData.tasksCompleted}</div>
-                  <p className="text-xs text-green-600 mt-1">↑ {workforceData.tasksCompletedChange}% vs last month</p>
+                  <p className="text-xs text-gray-600 mt-1">↑ {workforceData.tasksCompletedChange}% vs last month</p>
                 </CardContent>
               </Card>
             </div>
@@ -312,7 +312,7 @@ export function Analytics() {
                       <XAxis dataKey="location" />
                       <YAxis />
                       <Tooltip />
-                      <Bar dataKey="visits" fill="#3b82f6" />
+                      <Bar dataKey="visits" fill="#4b5563" />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -389,9 +389,9 @@ export function Analytics() {
                   </div>
                 </div>
 
-                <div className="p-6 bg-green-50 border border-green-200 rounded-lg">
+                <div className="p-6 bg-gray-50 border border-gray-200 rounded-lg">
                   <div className="text-sm text-gray-600 mb-2">Variance</div>
-                  <div className="text-3xl font-bold text-green-600">-0.8 days</div>
+                  <div className="text-3xl font-bold text-gray-900">-0.8 days</div>
                   <p className="text-sm text-gray-600 mt-2">Below expected, indicating improved efficiency</p>
                 </div>
               </CardContent>
@@ -413,7 +413,7 @@ export function Analytics() {
                     <XAxis dataKey="days" />
                     <YAxis />
                     <Tooltip />
-                    <Bar dataKey="count" fill="#3b82f6" />
+                    <Bar dataKey="count" fill="#4b5563" />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
