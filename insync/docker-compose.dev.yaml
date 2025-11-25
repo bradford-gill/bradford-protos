@@ -10,6 +10,7 @@ services:
   caddy:
     environment:
       - DOMAIN=localhost
+      
   frontend:
     # Mount the local Vite project to enable hot reload
     volumes:
