@@ -1,0 +1,36 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    # Removed external port mapping - only accessible via internal network
+    expose:
+      - "5173"
+    networks:
+      - internal-network
+    restart: unless-stopped
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+
+  caddy:
+    image: caddy:2-alpine
+    # Only Caddy has external port mappings
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - internal-network
+    restart: unless-stopped
+    depends_on:
+      - frontend
+
+networks:
+  internal-network:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,6 @@
+prototype.bradfordgill.com {
+    reverse_proxy frontend:5137 # Change to react port 
+    tls {
+        protocols tls1.2 tls1.3
+    }
+}
