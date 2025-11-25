@@ -23,6 +23,8 @@ services:
       - caddy_config:/config
     networks:
       - internal-network
+    environment:
+      - DOMAIN=prototype.bradfordgill.com
     restart: unless-stopped
     depends_on:
       - frontend

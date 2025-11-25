@@ -12,4 +12,7 @@ source venv/bin/activate
 uv pip freeze > requirements.txt
 
 uv pip install -r requirements.txt
+
+streamlit run main.py
+# if unexpected behavoir try: uv run streamlit run main.py
 ~~~

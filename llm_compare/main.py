@@ -12,38 +12,99 @@ def open_ai_search(user_input):
     # Use API key from environment variables
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    response = client.responses.create(
-        model="gpt-4o",
-        tools=[{"type": "web_search_preview"}],
-        input="What was a positive news story from today?"
-    )
+    # Create a placeholder for streaming output
+    placeholder = st.empty()
+    full_response = ""
 
-    return response.output_text
+    # Stream the response
+    for chunk in client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": user_input}],
+        tools=[{"type": "web_search"}],
+        stream=True
+    ):
+        content = chunk.choices[0].delta.content or ""
+        full_response += content
+        placeholder.markdown(full_response)
+    
+    return full_response
     
 
 def perplexity_search(user_input):
-    api_key = os.getenv("PERPLEXITY_API_KEY")
     headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
+            "Authorization": f"Bearer {os.getenv('PERPLEXITY_API_KEY')}",
+            "Content-Type": "application/json",
+        }
+    
+    base_url = "https://api.perplexity.ai/chat/completions"
+
+    default_system_message = """You are a helpful assistant that provides accurate information.
+        Keep responses concise and to the point."""
+
+    # Add stream=True to enable streaming
+    payload = {
+        "model": "sonar-pro",
+        "messages": [
+            {
+                "role": "system",
+                "content": default_system_message,
+            },
+            {"role": "user", "content": user_input},
+        ],
+        "max_tokens": 1000,
+        "temperature": 0.2,
+        "stream": True
     }
-    
-    data = {
-        "model": "sonar-medium-online",
-        "query": user_input,
-        "search": True
-    }
-    
-    response = requests.post(
-        "https://api.perplexity.ai/chat/completions",
-        headers=headers,
-        json=data
-    )
-    
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
-    else:
-        return f"Error: {response.status_code}, {response.text}"
+
+    # Create a placeholder for streaming output
+    placeholder = st.empty()
+    full_response = ""
+    sources = []
+
+    try:
+        with requests.post(
+            base_url,
+            json=payload,
+            headers=headers,
+            stream=True
+        ) as response:
+            response.raise_for_status()
+            
+            for line in response.iter_lines():
+                if line:
+                    line = line.decode('utf-8')
+                    if line.startswith('data: '):
+                        data = line[6:]  # Remove 'data: ' prefix
+                        if data == "[DONE]":
+                            break
+                        
+                        import json
+                        try:
+                            chunk = json.loads(data)
+                            if 'choices' in chunk and len(chunk['choices']) > 0:
+                                content = chunk['choices'][0]['delta'].get('content', '')
+                                if content:
+                                    full_response += content
+                                    placeholder.markdown(f"{full_response}\n\n----\n\n{sources}")
+                                
+                                # Check if there are citations in the chunk
+                                if 'citations' in chunk:
+                                    for url in chunk['citations']:
+                                        if url not in sources:
+                                            sources.append(url)
+                                            placeholder.markdown(f"{full_response}\n\n----\n\n{sources}")
+                        except json.JSONDecodeError:
+                            pass
+
+        return f"""
+            {full_response}
+            ----
+
+            {sources}        
+            """
+
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Error querying Perplexity API: {str(e)}")
 
 
 def compare_search():
@@ -72,13 +133,13 @@ def compare_search():
         st.subheader("Open AI")
         with st.spinner("Loading OpenAI response..."):
             openai_response = open_ai_search(user_input)
-            st.markdown(openai_response)
+            # The markdown display happens inside the open_ai_search function now
     
     with right:
         st.subheader("Perplexity")
         with st.spinner("Loading Perplexity response..."):
             perplexity_response = perplexity_search(user_input)
-            st.markdown(perplexity_response)
+            # The markdown display happens inside the perplexity_search function now
 
 
 # Dictionary of pages
